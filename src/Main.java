@@ -8,6 +8,7 @@ public class Main {
         Tabuleiro jogo = new Tabuleiro(Dificuldade.FÁCIL, Tamanho.PEQUENO);
         imprimirTabuleiro(jogo);
         int y,x;
+        String[] posicoes;
 
         while(true) {
             System.out.println("Escolha uma opção: ");
@@ -20,9 +21,10 @@ public class Main {
 
                 case 1:
                     imprimirTabuleiro(jogo);
+                    break;
                 case 2:
                     System.out.println("Insira a posição (linha, coluna):");
-                    String[] posicoes = sc.nextLine().split(",");
+                    posicoes = sc.nextLine().split(",");
                     y = Integer.parseInt(posicoes[0].trim());
                     x = Integer.parseInt(posicoes[1].trim());
                     if(escolherPosicao(jogo, y, x) == 0){
@@ -34,9 +36,10 @@ public class Main {
                     }
                     break;
                 case 3:
-                    y = sc.nextInt();
-                    x = sc.nextInt();
-                    sc.nextLine();
+                    System.out.println("Insira a posição (linha, coluna):");
+                    posicoes = sc.nextLine().split(",");
+                    y = Integer.parseInt(posicoes[0].trim());
+                    x = Integer.parseInt(posicoes[1].trim());
                     marcarPosição(jogo,y,x);
                     if(verificarSeGanhou(jogo)){
                         System.out.println("Parabéns Você Ganhou!!!!");
@@ -136,19 +139,23 @@ public class Main {
             System.out.println("EXPLODIU !!!!!");
             return 0;
         }
-
         jogo.verificaVizinhos(y-1,x-1);
         return 1;
     }
 
     public static void marcarPosição(Tabuleiro jogo, int y, int x){
-        jogo.marcar(y,x);
+        jogo.marcar(y-1,x-1);
     }
 
     public static boolean verificarSeGanhou(Tabuleiro jogo){
         for (int i = 0; i < jogo.altura;i++) {
             for (int j = 0; j < jogo.largura; j++) {
                 if (jogo.tabuleiro.get(i).get(j).getEstadoatual() == EstadosCampo.Fechado) {
+                    System.out.println("Existem Posições Fechadas");
+                    return false;
+                }
+                if (jogo.tabuleiro.get(i).get(j).getEstadoatual() == EstadosCampo.Marcado) {
+                    System.out.println("Existem Posições Marcadas");
                     return false;
                 }
             }

@@ -32,7 +32,7 @@ public class Tabuleiro {
             for (int j = 0; j < this.largura;j++){
                 if (dificuldade == Dificuldade.FÁCIL){
                     int val = (new Random().nextInt(100));
-                    if (val <= 20) {
+                    if (val < 0) {
                         campo = new Campo(EstadosCampo.Bomba);
                     }
                     else {
@@ -78,6 +78,7 @@ public class Tabuleiro {
 
         atual.setEstadoatual(EstadosCampo.Aberto);
 
+
         if (x + 1 < this.largura && y + 1 < this.altura) {
             verificaVizinhos(y + 1, x + 1);
         }
@@ -95,7 +96,6 @@ public class Tabuleiro {
             verificaVizinhos(y - 1, x - 1);
         }
 
-//------------------------------------------------------------------------------
 
         if (x + 1 < this.largura) {
             verificaVizinhos( y, x+1);
@@ -143,8 +143,6 @@ public class Tabuleiro {
                 qtdBombas += 1;
             }
         }
-
-//------------------------------------------------------------------------------
 
         if (x + 1 < this.largura) {
             if(tabuleiro.get(y).get(x+1).getEstadoatual() == EstadosCampo.Bomba){
